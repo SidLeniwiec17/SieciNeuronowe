@@ -1,0 +1,66 @@
+﻿<Window x:Class="SN1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="420" Width="525" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Content="Załaduj zbiór uczący" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="1" Content="Załaduj zbiór testowy" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="2" Content="Liczba warstw sieci :" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="3" Content="Liczba neuronów w warstwie :" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="Funkcja Aktywacji" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="5" Content="Obciążenie :" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="6" Content="Liczba iteracji :" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="7" Content="Współczynnik nauki :" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="8" Content="Współczynnik bezwładności :" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="9" Content="Rodzaj problemu" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+
+        <Button Grid.Column="1" Grid.Row="0" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Button Grid.Column="1" Grid.Row="1" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <TextBox Name="TBLayers" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="8" VerticalAlignment="Center"/>
+        <TextBox Name="TBNeuronsInLayer" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="6" VerticalAlignment="Center"/>
+        <ComboBox Name ="CBAktywacje" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center">
+            <ComboBoxItem Name="cbi1">BiPolar</ComboBoxItem>
+            <ComboBoxItem Name="cbi2">Elliott</ComboBoxItem>
+            <ComboBoxItem Name="cbi3">Gaussian</ComboBoxItem>
+            <ComboBoxItem Name="cbi4">Linear</ComboBoxItem>
+            <ComboBoxItem Name="cbi5">Log</ComboBoxItem>
+            <ComboBoxItem Name="cbi6">Ramp</ComboBoxItem>
+            <ComboBoxItem Name="cbi7">Sigmoid</ComboBoxItem>
+            <ComboBoxItem Name="cbi8">Sin</ComboBoxItem>
+            <ComboBoxItem Name="cbi9">SoftMax</ComboBoxItem>
+            <ComboBoxItem Name="cbi10">Step</ComboBoxItem>
+            <ComboBoxItem Name="cbi11">TanH</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Name ="CBObciazenie" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center">
+            <ComboBoxItem Name="cbi12">Włączone</ComboBoxItem>
+            <ComboBoxItem Name="cbi13">Wyłączone</ComboBoxItem>
+        </ComboBox>
+        <TextBox Name="TBIteracje" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="10000" VerticalAlignment="Center"/>
+        <TextBox Name="TBWspUczenia" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,25" VerticalAlignment="Center"  Grid.Row="7"/>
+        <TextBox Name="TBWspBezwladnosci" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,25" VerticalAlignment="Center"/>
+        <ComboBox Name ="CBProblem" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center">
+            <ComboBoxItem Name="cbi14">Problem Klasyfikacji</ComboBoxItem>
+            <ComboBoxItem Name="cbi15">Problem Regresji</ComboBoxItem>
+        </ComboBox>
+        <Button Grid.Column="1" Grid.Row="10" Content="Start" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="Start_Click"/>
+        <Button Grid.Column="1" Grid.Row="12" Content="Rysuj Wyniki" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+    </Grid>
+</Window>
