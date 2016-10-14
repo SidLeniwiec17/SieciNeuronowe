@@ -34,8 +34,8 @@
 
         <Button Grid.Column="1" Grid.Row="0" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
         <Button Grid.Column="1" Grid.Row="1" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
-        <TextBox Name="TBLayers" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="8" VerticalAlignment="Center"/>
-        <TextBox Name="TBNeuronsInLayer" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="6" VerticalAlignment="Center"/>
+        <TextBox Name="TBLayers" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="6" VerticalAlignment="Center"/>
+        <TextBox Name="TBNeuronsInLayer" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="4" VerticalAlignment="Center"/>
         <ComboBox Name ="CBAktywacje" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center">
             <ComboBoxItem Name="cbi1">BiPolar</ComboBoxItem>
             <ComboBoxItem Name="cbi2">Elliott</ComboBoxItem>
@@ -54,8 +54,8 @@
             <ComboBoxItem Name="cbi13">Wyłączone</ComboBoxItem>
         </ComboBox>
         <TextBox Name="TBIteracje" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="10000" VerticalAlignment="Center"/>
-        <TextBox Name="TBWspUczenia" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,25" VerticalAlignment="Center"  Grid.Row="7"/>
-        <TextBox Name="TBWspBezwladnosci" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,25" VerticalAlignment="Center"/>
+        <TextBox Name="TBWspUczenia" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,1" VerticalAlignment="Center"  Grid.Row="7"/>
+        <TextBox Name="TBWspBezwladnosci" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,1" VerticalAlignment="Center"/>
         <ComboBox Name ="CBProblem" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center">
             <ComboBoxItem Name="cbi14">Problem Klasyfikacji</ComboBoxItem>
             <ComboBoxItem Name="cbi15">Problem Regresji</ComboBoxItem>
