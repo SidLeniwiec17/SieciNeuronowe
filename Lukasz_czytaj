@@ -3,15 +3,19 @@ Co jest, co trzeba zrobic.
 1. 
 Narazie mam wklepane z palca przykladowe 36 danych uczacych. W opor mało, i przez to moge miec slabe wyniki.
 Dlatego trzeba zrobic wgrywanie z Excela ze stronu okulusa.
-Dla problemu klasyfikacji masz 3 liczby w kazdym wierszu oddzielone przecinkami. Pierwsze dwie to double i wgrywac sie musza do tablicy takiej jak wklepana z palca KLASYFIKACJA_INPUT.
-Ostatnia trzecia liczba to int ktory moze byc 1, 2 lub 3. Dla 1 potrzebuje miec double[3] { 1.0 , 0.0, 0.0}, dla 2 double[3] { 0.0 , 1.0, 0.0}, a dla 3 double[3] { 0.0 , 0.0, 1.0}. I to tez wgrywac do analogicznej tablicy jak przykladowa KLASYFIKACJA_IDEAL.
+Dla problemu klasyfikacji masz 3 liczby w kazdym wierszu oddzielone przecinkami. Pierwsze dwie to double i wgrywac sie musza do tablicy 
+takiej jak wklepana z palca KLASYFIKACJA_INPUT.
+Ostatnia trzecia liczba to int ktory moze byc 1, 2 lub 3. Dla 1 potrzebuje miec double[3] { 1.0 , 0.0, 0.0}, 
+dla 2 double[3] { 0.0 , 1.0, 0.0}, a dla 3 double[3] { 0.0 , 0.0, 1.0}. I to tez wgrywac do analogicznej tablicy jak 
+przykladowa KLASYFIKACJA_IDEAL.
 Razem bedzie to set uczacy. pierwsza tablica to input, a druga to oczekiwany rezultat. 
 
 2. 
 Jest combobox CBAktywacje. Gdzie masz wyliczone Funkcje Aktywacji. Narazie ten combobox nic nie zmienia. 
 W funkcji CreateNeuronNetwork, gdzie tworzymy siec, dla kazdej warstwy w konstruktorze takim jak
 network.AddLayer(new BasicLayer(new ActivationSigmoid(), nHelp.bias, nHelp.neurons));
-podajemy funkcje aktywizująca neuron ( ActivisationSigmoid() ). I to powinno sie zmieniac zgodnie z comboboxem ale ni chu chu nie wiem jeszcze jak to zrobic. Plus nie wiem czy kazda z tych funkcji bedzie dzialas dla tego typu sieci.
+podajemy funkcje aktywizująca neuron ( ActivisationSigmoid() ). I to powinno sie zmieniac zgodnie z comboboxem ale ni chu chu 
+nie wiem jeszcze jak to zrobic. Plus nie wiem czy kazda z tych funkcji bedzie dzialas dla tego typu sieci.
 Domyslnie narazie jest ten Sigmoid.
 
 3. 
