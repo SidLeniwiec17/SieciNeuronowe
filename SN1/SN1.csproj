@@ -72,9 +72,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FileReader.cs" />
-    <Compile Include="Items\ItemInterface.cs" />
-    <Compile Include="Items\ThreeVariableItem.cs" />
-    <Compile Include="Items\TwoVariableItem.cs" />
+    <Compile Include="Items\RowObject.cs" />
+    <Compile Include="Items\RowObjectMap.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

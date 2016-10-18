@@ -288,18 +288,18 @@ namespace SN1
         private void SelectCsvButton_Click(object sender, RoutedEventArgs e)
         {
             var fileReader = new FileReader();
-            List<ThreeVariableItem> items = fileReader.GetItems();
+            List<RowObject> items = fileReader.GetItems();
             KLASYFIKACJA_INPUT = new double[items.Count][];
             KLASYFIKACJA_IDEAL = new double[items.Count][];
             for (int i = 0; i < items.Count; i++)
             {
-                var item = (ThreeVariableItem)items[i];
+                var item = (RowObject)items[i];
                 KLASYFIKACJA_INPUT[i] = new double[2];
                 KLASYFIKACJA_INPUT[i][0] = item.x;
-                KLASYFIKACJA_INPUT[i][1] = item.y;
+                KLASYFIKACJA_INPUT[i][1] = item.y.Value;
 
                 KLASYFIKACJA_IDEAL[i] = new double[3] { 0.0, 0.0, 0.0 };
-                KLASYFIKACJA_IDEAL[i][item.cls-1] = 1.0;
+                KLASYFIKACJA_IDEAL[i][item.cls.Value-1] = 1.0;
             }
         }
     }

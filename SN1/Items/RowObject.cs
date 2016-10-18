@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace SN1.Items
 {
-    public class ThreeVariableItem : ItemInterface
+    public class RowObject
     {
-        public ThreeVariableItem()
+        public RowObject()
         {
 
         }
         public double x { get; set; }
-        public double y { get; set; }
-        public int cls { get; set; }
+        public double? y { get; set; }
+        public int? cls { get; set; }
     }
 }
