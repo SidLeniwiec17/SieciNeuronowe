@@ -30,9 +30,18 @@ namespace SN1
 
             using (TextReader reader = File.OpenText(fileName))
             {
+                var list = new List<ThreeVariableItem>();
                 var csv = new CsvReader(reader);
-                var records = csv.GetRecords<ThreeVariableItem>().ToList();
-                return records;
+                while (csv.Read())
+                {
+                    var field1 = csv.GetField<double>(0);
+                    var field2= csv.GetField<double>(1);
+                    var field3 = csv.GetField<int>(2);
+                    list.Add(new ThreeVariableItem() { x = field1, y = field2, cls = field3 });
+                }
+                return list;
+                //                var records = csv.GetRecords<ThreeVariableItem>().ToList();
+                //return records;
             }            
         }
     }
