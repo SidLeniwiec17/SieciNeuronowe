@@ -6,21 +6,10 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.NeuralData;
+using SN1.Items;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 namespace SN1
 {
     /// <summary>
@@ -31,7 +20,7 @@ namespace SN1
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static double[][] KLASYFIKACJA_INPUT ={
+        public double[][] KLASYFIKACJA_INPUT ={
                                                 new double[2] { -0.120835004807233, 0.185909693092369 },
                                                 new double[2] { -0.0981255045917765, 0.6999098823963 },
                                                 new double[2] { 0.0778210176149909, 0.439883965705725 },
@@ -74,7 +63,7 @@ namespace SN1
                                                 new double[2] { 0.00410489596212299, -0.235381956512001 },
                                                 new double[2] { -0.0858066440374611,-0.503867349987556}
                                             };
-         public static double[][] KLASYFIKACJA_IDEAL = {                                              
+         public double[][] KLASYFIKACJA_IDEAL = {                                              
                                                   new double[3] { 1.0 , 0.0, 0.0},
                                                   new double[3] { 1.0 , 0.0, 0.0},
                                                   new double[3] { 1.0 , 0.0, 0.0},
@@ -294,6 +283,24 @@ namespace SN1
             
             ITrain train = new Backpropagation(network, trainingSet, nHelp.learning, nHelp.momentum);
             return train;
+        }
+
+        private void SelectCsvButton_Click(object sender, RoutedEventArgs e)
+        {
+            var fileReader = new FileReader();
+            List<ThreeVariableItem> items = fileReader.GetItems();
+            KLASYFIKACJA_INPUT = new double[items.Count][];
+            KLASYFIKACJA_IDEAL = new double[items.Count][];
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = (ThreeVariableItem)items[i];
+                KLASYFIKACJA_INPUT[i] = new double[2];
+                KLASYFIKACJA_INPUT[i][0] = item.x;
+                KLASYFIKACJA_INPUT[i][1] = item.y;
+
+                KLASYFIKACJA_IDEAL[i] = new double[3] { 0.0, 0.0, 0.0 };
+                KLASYFIKACJA_IDEAL[i][item.cls-1] = 1.0;
+            }
         }
     }
 }

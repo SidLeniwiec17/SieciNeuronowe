@@ -1,0 +1,17 @@
+C:\Projects\SN\SN1\bin\Debug\SN1.exe.config
+C:\Projects\SN\SN1\bin\Debug\SN1.exe
+C:\Projects\SN\SN1\bin\Debug\SN1.pdb
+C:\Projects\SN\SN1\bin\Debug\encog-core-cs.dll
+C:\Projects\SN\SN1\bin\Debug\log4net.dll
+C:\Projects\SN\SN1\obj\Debug\SN1.csprojResolveAssemblyReference.cache
+C:\Projects\SN\SN1\obj\Debug\MainWindow.baml
+C:\Projects\SN\SN1\obj\Debug\MainWindow.g.cs
+C:\Projects\SN\SN1\obj\Debug\App.g.cs
+C:\Projects\SN\SN1\obj\Debug\SN1_MarkupCompile.cache
+C:\Projects\SN\SN1\obj\Debug\SN1.g.resources
+C:\Projects\SN\SN1\obj\Debug\SN1.Properties.Resources.resources
+C:\Projects\SN\SN1\obj\Debug\SN1.csproj.GenerateResource.Cache
+C:\Projects\SN\SN1\obj\Debug\SN1.exe
+C:\Projects\SN\SN1\obj\Debug\SN1.pdb
+C:\Projects\SN\SN1\bin\Debug\CsvHelper.dll
+C:\Projects\SN\SN1\bin\Debug\CsvHelper.xml
