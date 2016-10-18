@@ -32,8 +32,8 @@ namespace SN1
 
             using (TextReader reader = File.OpenText(fileName))
             {
-                var list = new List<RowObject>();
-                var stringList = new List<string>();
+                //var list = new List<RowObject>();
+                //var stringList = new List<string>();
                 var csv = new CsvReader(reader);
                 csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
                 csv.Configuration.RegisterClassMap<RowObjectMap>();

@@ -127,38 +127,38 @@ namespace SN1
             if (ValidateIntput() == false)
                 return;
 
-            INeuralDataSet trainingSet = CombineTrainingSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
-            INeuralDataSet learningSet = CombineTrainingSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
- 
-            ITrain training = CreateNeuronNetwork(trainingSet);
+            INeuralDataSet learningSet = CombineTrainingSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
+            INeuralDataSet trainingSet = CombineTrainingSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
+
+            ITrain learning = CreateNeuronNetwork(learningSet);
             int iteracja = 0; 
             do
             {
-                training.Iteration();
-                Console.WriteLine("Epoch #" + iteracja + " Error:" + training.Error);
+                learning.Iteration();
+                Console.WriteLine("Epoch #" + iteracja + " Error:" + learning.Error);
                 iteracja++;
-            } while ((iteracja < nHelp.liczbaIteracji) && (training.Error > 0.0005));
+            } while ((iteracja < nHelp.liczbaIteracji) && (learning.Error > 0.0005));
 
             // TUTAJ SKONCZYL SIE PROCES NAUKI
             // POWINNISMY NA TA SIEC NALOZYC TERAZ ZBIOR TESTOWY
             // ORAZ NARYSOWAC GRAFY
             int i=0;
             Console.WriteLine("Neural Network Results:");
-            foreach (INeuralDataPair pair in learningSet)
+            foreach (INeuralDataPair pair in trainingSet)
             {
-                INeuralData output = training.Network.Compute(pair.Input);
+                INeuralData output = learning.Network.Compute(pair.Input);
                 if ((int)(output[0]) == 1)
                     KLASYFIKACJA_WYNIK[i] = 1.0;
                 else if ((int)(output[1]) == 1)
                     KLASYFIKACJA_WYNIK[i] = 2.0;
-                else if ((int)(output[2]) == 1)
+                else
                     KLASYFIKACJA_WYNIK[i] = 3.0;
                 i++;
                 //Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
                 //+ ", actual=" + output[0] + ", " + output[1] + ", " + output[2] + ",ideal=" + pair.Ideal[0] + ", " + pair.Ideal[1] + ", " + pair.Ideal[2]);
             }
 
-
+            Console.WriteLine("Calculated");
 
         }
 
@@ -214,8 +214,22 @@ namespace SN1
 
         private void WczytajTestowy_Click(object sender, RoutedEventArgs e)
         {
-           
+            var fileReader = new FileReader();
+            List<RowObject> items = fileReader.GetItems();
+            KLASYFIKACJA_TESTOWY_INPUT = new double[items.Count][];
+            KLASYFIKACJA_ODPOWIEDZI = new double[items.Count][];
+            KLASYFIKACJA_WYNIK = new double[items.Count];
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = (RowObject)items[i];
+                KLASYFIKACJA_TESTOWY_INPUT[i] = new double[2];
+                KLASYFIKACJA_TESTOWY_INPUT[i][0] = item.x;
+                KLASYFIKACJA_TESTOWY_INPUT[i][1] = item.y.Value;
+                KLASYFIKACJA_ODPOWIEDZI[i] = new double[3] { 0.0, 0.0, 0.0 };
+            }
         }
 
     }
 }
+
