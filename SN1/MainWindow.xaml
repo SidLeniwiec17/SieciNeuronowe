@@ -62,5 +62,6 @@
         </ComboBox>
         <Button Grid.Column="1" Grid.Row="10" Content="Start" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="Start_Click"/>
         <Button Grid.Column="1" Grid.Row="12" Content="Rysuj Wyniki" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Button Name="SelectCsvButton" Grid.Column="0" Grid.Row="12" Margin="2,2,2,2" Click="SelectCsvButton_Click">Select File</Button>
     </Grid>
 </Window>
