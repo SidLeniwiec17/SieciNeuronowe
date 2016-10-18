@@ -20,131 +20,14 @@ namespace SN1
     /// </summary>
     public partial class MainWindow : Window
     {
-        public double[][] KLASYFIKACJA_INPUT ={
-                                                new double[2] { -0.120835004807233, 0.185909693092369 },
-                                                new double[2] { -0.0981255045917765, 0.6999098823963 },
-                                                new double[2] { 0.0778210176149909, 0.439883965705725 },
-                                                new double[2] { 0.539304250361261, 0.148853158752743 } ,
-                                                new double[2] { 0.21250722755268, 0.867787766532976 },
-                                                new double[2] { -0.0212862244396033,0.295283891486845}, 
+        public double[][] KLASYFIKACJA_INPUT;
+        public double[][] KLASYFIKACJA_IDEAL;
 
-                                                new double[2] { 0.295601662332601, 0.544705418646667 },
-                                                new double[2] { -0.154313932113388, 0.304927409695447 },
-                                                new double[2] {-0.0605675806479125, 0.347600285504779 },
-                                                new double[2] { 0.0968516969760852, 0.445603711822102 } ,
-                                                new double[2] { -0.253502048302602, 0.277060250829347 },
-                                                new double[2] { 0.297582547062529,0.551893928088361}, 
+        public double[][] KLASYFIKACJA_TESTOWY_INPUT;
+        public double[][] KLASYFIKACJA_ODPOWIEDZI;
 
-                                                new double[2] { -0.321482745560569, 0.155377462442698 },
-                                                new double[2] { -0.742035943895382, 0.214322961393839 },
-                                                new double[2] {-0.828034138303721, 0.194952273583263 },
-                                                new double[2] { -0.893115411309494, 0.237755562196031} ,
-                                                new double[2] { -0.63389483375305, 0.261240601080596 },
-                                                new double[2] { -0.682195460002969,0.190750388286338}, 
-
-                                                new double[2] { -0.343425484304401, 0.205441700604293 },
-                                                new double[2] { -0.723574053959815, 0.287234401873544 },
-                                                new double[2] { -0.623332263941705, 0.202120808652005 },
-                                                new double[2] { -0.747225445090313, 0.196389294363966} ,
-                                                new double[2] { -0.903236472201214, 0.20713991529638 },
-                                                new double[2] { -0.26158428291182, 0.241401008413324},
-
-                                                new double[2] { 0.138491831342076, -0.290209732527407 },
-                                                new double[2] { -0.117770161902206, -0.318418371805794 },
-                                                new double[2] { 0.154527592206068, -0.386415823250062 },
-                                                new double[2] { 0.191029508101819, -0.42328951740268 } ,
-                                                new double[2] { 0.154843979455491, -0.514968676573543 },
-                                                new double[2] { -0.00506506800112611,-0.0814994894139582},
-
-                                                new double[2] { -0.0416822049597956, -0.17245900641548 },
-                                                new double[2] { -0.197651109323041, 0.493131239528278 },
-                                                new double[2] { -0.2746436119221, 0.27560509493857 },
-                                                new double[2] { -0.19841506694444, -0.552323916767805 } ,
-                                                new double[2] { 0.00410489596212299, -0.235381956512001 },
-                                                new double[2] { -0.0858066440374611,-0.503867349987556}
-                                            };
-         public double[][] KLASYFIKACJA_IDEAL = {                                              
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  new double[3] { 0.0 , 1.0, 0.0 },
-                                                  
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0}
-                                                  };
-         
-       /* public static double[][] KLASYFIKACJA_IDEAL = {                                              
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
- 
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 }
-                                             };*/
-        
+        public double[] KLASYFIKACJA_WYNIK;
+       
         public NetworkHelper nHelp;
 
         public MainWindow()
@@ -194,6 +77,20 @@ namespace SN1
                 return false;
             }
 
+            if (KLASYFIKACJA_INPUT.Length <= 0 || KLASYFIKACJA_IDEAL.Length <= 0)
+            {
+                MessageBox.Show("Bład ! Nalezy wczytac zbior uczacy");
+                return false;
+            }
+
+            if (KLASYFIKACJA_TESTOWY_INPUT.Length <= 0 )
+            {
+                MessageBox.Show("Bład ! Nalezy wczytac zbior testowy");
+                return false;
+            }
+
+
+
             bool bias = true;
             if(CBObciazenie.SelectedIndex == 1)
                 bias = false;
@@ -206,6 +103,13 @@ namespace SN1
         /*Funkcja która ustawia domyslne parametry przy uruchomieniu*/
         public void InitialSettings()
         {
+            KLASYFIKACJA_INPUT = new double[0][];
+            KLASYFIKACJA_IDEAL = new double[0][];
+
+            KLASYFIKACJA_TESTOWY_INPUT = new double[0][];
+            KLASYFIKACJA_ODPOWIEDZI = new double[0][];
+            KLASYFIKACJA_WYNIK = new double[0];
+            
             CBAktywacje.SelectedIndex = 6;
             CBObciazenie.SelectedIndex = 0;
             CBProblem.SelectedIndex = 0;
@@ -224,7 +128,8 @@ namespace SN1
                 return;
 
             INeuralDataSet trainingSet = CombineTrainingSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
-
+            INeuralDataSet learningSet = CombineTrainingSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
+ 
             ITrain training = CreateNeuronNetwork(trainingSet);
             int iteracja = 0; 
             do
@@ -237,18 +142,22 @@ namespace SN1
             // TUTAJ SKONCZYL SIE PROCES NAUKI
             // POWINNISMY NA TA SIEC NALOZYC TERAZ ZBIOR TESTOWY
             // ORAZ NARYSOWAC GRAFY
-
+            int i=0;
             Console.WriteLine("Neural Network Results:");
-            foreach (INeuralDataPair pair in trainingSet)
+            foreach (INeuralDataPair pair in learningSet)
             {
-                /*INeuralData output = training.Network.Compute(pair.Input);
-                Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
-                + ", actual=" + output[0] + ",ideal=" + pair.Ideal[0]);*/
-
                 INeuralData output = training.Network.Compute(pair.Input);
-                Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
-                + ", actual=" + output[0] + ", " + output[1] + ", " + output[2] + ",ideal=" + pair.Ideal[0] + ", " + pair.Ideal[1] + ", " + pair.Ideal[2]);
+                if ((int)(output[0]) == 1)
+                    KLASYFIKACJA_WYNIK[i] = 1.0;
+                else if ((int)(output[1]) == 1)
+                    KLASYFIKACJA_WYNIK[i] = 2.0;
+                else if ((int)(output[2]) == 1)
+                    KLASYFIKACJA_WYNIK[i] = 3.0;
+                i++;
+                //Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
+                //+ ", actual=" + output[0] + ", " + output[1] + ", " + output[2] + ",ideal=" + pair.Ideal[0] + ", " + pair.Ideal[1] + ", " + pair.Ideal[2]);
             }
+
 
 
         }
@@ -285,7 +194,7 @@ namespace SN1
             return train;
         }
 
-        private void SelectCsvButton_Click(object sender, RoutedEventArgs e)
+        private void WczytajUczacy_Click(object sender, RoutedEventArgs e)
         {
             var fileReader = new FileReader();
             List<RowObject> items = fileReader.GetItems();
@@ -302,5 +211,11 @@ namespace SN1
                 KLASYFIKACJA_IDEAL[i][item.cls.Value-1] = 1.0;
             }
         }
+
+        private void WczytajTestowy_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
     }
 }

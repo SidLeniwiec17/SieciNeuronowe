@@ -32,8 +32,8 @@
         <Label Grid.Column="0" Grid.Row="8" Content="Współczynnik bezwładności :" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
         <Label Grid.Column="0" Grid.Row="9" Content="Rodzaj problemu" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
 
-        <Button Grid.Column="1" Grid.Row="0" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
-        <Button Grid.Column="1" Grid.Row="1" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
+        <Button Grid.Column="1" Grid.Row="0" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="WczytajUczacy_Click"/>
+        <Button Grid.Column="1" Grid.Row="1" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="WczytajTestowy_Click"/>
         <TextBox Name="TBLayers" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="6" VerticalAlignment="Center"/>
         <TextBox Name="TBNeuronsInLayer" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="4" VerticalAlignment="Center"/>
         <ComboBox Name ="CBAktywacje" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center">
@@ -62,6 +62,5 @@
         </ComboBox>
         <Button Grid.Column="1" Grid.Row="10" Content="Start" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="Start_Click"/>
         <Button Grid.Column="1" Grid.Row="12" Content="Rysuj Wyniki" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
-        <Button Name="SelectCsvButton" Grid.Column="0" Grid.Row="12" Margin="2,2,2,2" Click="SelectCsvButton_Click">Select File</Button>
     </Grid>
 </Window>

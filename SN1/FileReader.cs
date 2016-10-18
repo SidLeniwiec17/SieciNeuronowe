@@ -21,9 +21,10 @@ namespace SN1
         public object DialogResult { get; private set; }
 
         public List<RowObject> GetItems()
+
         {
             OpenFileDialog choofdlog = new OpenFileDialog();
-            choofdlog.Filter = "All Files (*.*)|*.*";
+            choofdlog.Filter = "All Files (.)|*.*";
             choofdlog.FilterIndex = 1;
             choofdlog.Multiselect = false;
             choofdlog.ShowDialog();
@@ -40,6 +41,7 @@ namespace SN1
                 var records = csv.GetRecords<RowObject>().ToList();
                 return records;
             }            
+            
         }
     }
 }
