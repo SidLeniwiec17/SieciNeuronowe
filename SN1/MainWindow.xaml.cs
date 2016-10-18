@@ -75,18 +75,18 @@ namespace SN1
                                                 new double[2] { -0.0858066440374611,-0.503867349987556}
                                             };
          public static double[][] KLASYFIKACJA_IDEAL = {                                              
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
-                                                  new double[3] { 1.0 , 0.0, 0.0},
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
+                                                  new double[3] { 1.0 , 0.0, 0.0 },
 
                                                   new double[3] { 0.0 , 1.0, 0.0 },
                                                   new double[3] { 0.0 , 1.0, 0.0 },
@@ -101,61 +101,20 @@ namespace SN1
                                                   new double[3] { 0.0 , 1.0, 0.0 },
                                                   new double[3] { 0.0 , 1.0, 0.0 },
                                                   
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0},
-                                                  new double[3] { 0.0 , 0.0, 1.0}
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 } ,
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 } ,
+                                                  new double[3] { 0.0 , 0.0, 1.0 },
+                                                  new double[3] { 0.0 , 0.0, 1.0 } 
                                                   };
          
-       /* public static double[][] KLASYFIKACJA_IDEAL = {                                              
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-                                                 new double[1] { 1.0 },
-
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
-                                                 new double[1] { 2.0 },
- 
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 },
-                                                 new double[1] { 3.0 }
-                                             };*/
-        
         public NetworkHelper nHelp;
 
         public MainWindow()
@@ -241,7 +200,7 @@ namespace SN1
             do
             {
                 training.Iteration();
-                Console.WriteLine("Epoch #" + iteracja + " Error:" + training.Error);
+                Console.WriteLine("Iteracja #" + iteracja + " Error:" + training.Error);
                 iteracja++;
             } while ((iteracja < nHelp.liczbaIteracji) && (training.Error > 0.0005));
 
@@ -252,10 +211,6 @@ namespace SN1
             Console.WriteLine("Neural Network Results:");
             foreach (INeuralDataPair pair in trainingSet)
             {
-                /*INeuralData output = training.Network.Compute(pair.Input);
-                Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
-                + ", actual=" + output[0] + ",ideal=" + pair.Ideal[0]);*/
-
                 INeuralData output = training.Network.Compute(pair.Input);
                 Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
                 + ", actual=" + output[0] + ", " + output[1] + ", " + output[2] + ",ideal=" + pair.Ideal[0] + ", " + pair.Ideal[1] + ", " + pair.Ideal[2]);
