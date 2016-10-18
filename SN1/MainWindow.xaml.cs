@@ -299,8 +299,9 @@ namespace SN1
                 KLASYFIKACJA_INPUT[i][1] = item.y;
 
                 KLASYFIKACJA_IDEAL[i] = new double[3] { 0.0, 0.0, 0.0 };
-                KLASYFIKACJA_IDEAL[i][item.cls-1] = 1.0;
+                KLASYFIKACJA_IDEAL[i][item.cls - 1] = 1.0;
             }
         }
+
     }
 }
