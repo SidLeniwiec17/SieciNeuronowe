@@ -6,6 +6,9 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.NeuralData;
+using Encog.Normalize;
+using Encog.Normalize.Input;
+using Encog.Normalize.Output;
 using SN1.Items;
 using System;
 using System.Collections.Generic;
@@ -127,8 +130,12 @@ namespace SN1
             if (ValidateIntput() == false)
                 return;
 
-            INeuralDataSet learningSet = CombineTrainingSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
-            INeuralDataSet trainingSet = CombineTrainingSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
+            //INeuralDataSet learningSet = CombineTrainingSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
+            INeuralDataSet learningSet = NormaliseDataSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
+        
+            //INeuralDataSet trainingSet = CombineTrainingSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
+            INeuralDataSet trainingSet = NormaliseDataSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
+
 
             ITrain learning = CreateNeuronNetwork(learningSet);
             int iteracja = 0; 
@@ -137,6 +144,7 @@ namespace SN1
                 learning.Iteration();
                 Console.WriteLine("Epoch #" + iteracja + " Error:" + learning.Error);
                 iteracja++;
+                
             } while ((iteracja < nHelp.liczbaIteracji) && (learning.Error > 0.0005));
 
             // TUTAJ SKONCZYL SIE PROCES NAUKI
@@ -161,6 +169,38 @@ namespace SN1
             Console.WriteLine("Calculated");
 
         }
+
+        public INeuralDataSet NormaliseDataSet ( double[][] input, double[][] ideal)
+        {
+            double [][] norm_input = new double[input.Length][];
+
+            double max = input[0][0], min = input[0][0];
+
+            for(int i = 0 ; i < input.Length ; i ++)
+            {
+                if (input[i][0] < min)
+                    min = input[i][0];
+                if (input[i][1] < min)
+                    min = input[i][1];
+
+                if (input[i][0] > max)
+                    max = input[i][0];
+                if (input[i][1] > max)
+                    max = input[i][1];
+            }
+
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                norm_input[i] = new double[2];
+                norm_input[i][0] = (input[i][0] - min) / (max - min);
+                norm_input[i][1] = (input[i][1] - min) / (max - min);
+            }
+
+            INeuralDataSet dataset = CombineTrainingSet(norm_input, ideal);
+            return dataset;
+        }
+
 
         /*Funckja laczy dane wejsciowe zbioru uczacego z oczekiwanymi odpowiedziami w jeden obiekt bilbiotego Encog*/
         public INeuralDataSet CombineTrainingSet(double[][] dane, double[][] odpowiedzi)
