@@ -31,6 +31,7 @@ namespace SN1
         public double[][] neuralTestInput;
         public double[][] neuralAnswers;
         public double[] neuralAnswer;
+        public List<double> errors = new List<double>();
        
         public NetworkHelper nHelp;
 
@@ -144,6 +145,7 @@ namespace SN1
             {
                 learning.Iteration();
                 Console.WriteLine("Epoch #" + iteracja + " Error:" + learning.Error);
+                errors.Add(learning.Error);
                 iteracja++;
                 
             } while ((iteracja < nHelp.liczbaIteracji) && (learning.Error > 0.0005));
@@ -168,6 +170,15 @@ namespace SN1
             }
 
             Console.WriteLine("Calculated");
+            CreateErrorFile();
+            if(CBProblem.SelectedIndex == 0)
+            {
+                CreateClassificationFile();
+            }
+            else
+            {
+                CreateRegressionFile();
+            }
 
         }
 
@@ -238,9 +249,10 @@ namespace SN1
             List<RowObject> items = fileReader.GetItems();
             neuralInput = new double[items.Count][];
             neuralIdeal = new double[items.Count][];
+            RowObject item = new RowObject();
             for (int i = 0; i < items.Count; i++)
             {
-                var item = (RowObject)items[i];
+                item = (RowObject)items[i];
                 if(CBProblem.SelectedIndex == 0)
                 {
                     neuralInput[i] = new double[2];
@@ -259,6 +271,12 @@ namespace SN1
                     neuralIdeal[i][0] = item.y.Value;
                 }
             }
+            if ((CBProblem.SelectedIndex == 1 && item.cls.HasValue) || (CBProblem.SelectedIndex == 0 && !item.cls.HasValue))
+            {
+                MessageBox.Show("Input error");
+                this.Close();
+            }
+
         }
 
         private void WczytajTestowy_Click(object sender, RoutedEventArgs e)
@@ -287,11 +305,11 @@ namespace SN1
                     neuralAnswers[i] = new double[1] { 0.0 };
                 }
             }
-            if ((CBProblem.SelectedIndex == 1 && item.cls.HasValue) || (CBProblem.SelectedIndex == 0 && !item.cls.HasValue))
+            /*if ((CBProblem.SelectedIndex == 1 && item.cls.HasValue) || (CBProblem.SelectedIndex == 0 && !item.cls.HasValue))
             {
                 MessageBox.Show("Input error");
                 this.Close();
-            }
+            }*/
         }
 
 
@@ -323,6 +341,71 @@ namespace SN1
                     ActivationFunction = new ActivationTANH();
                     break;
             }
+        }
+        public void CreateErrorFile()
+        {
+            string line = "";
+            // Write the string to a file.
+            System.IO.StreamWriter file = new System.IO.StreamWriter("errors.R");
+            line = "points<- c(";
+            int i = 0;
+            for (i=0;i<errors.Count-1;i++)
+            {
+                line += errors[i] + ",";
+            }
+            line += errors[i] + ")";
+            file.WriteLine(line);
+            file.WriteLine(@"plot(points , type= ""o"", col= ""red"")");
+            file.WriteLine(@"title(main= ""Error"", col.main= ""black"", font.main= 4)");
+            //points<- c(0.9, 0.8, 0.8, 0.8, 0.7, 0.6666, 0.655, 0.65544, 0.3, 0.02, 0.015, 0.002)
+            //plot(points , type= "o", col= "red")
+            //title(main= "Error", col.main= "black", font.main= 4)
+
+            file.Close();
+        }
+        public void CreateRegressionFile()
+        {
+            System.IO.StreamWriter file = new System.IO.StreamWriter("regressionChart.R");
+            string line1;
+            string line2;
+            line1 = "x<- c(";
+            line2 = "y<- c(";
+            int i;
+            for (i=0;i<neuralTestInput.Length-1;i++)
+            {
+                line1 += neuralTestInput[i][0] + ",";
+                line2 += neuralAnswer[i] + ",";
+            }
+            line1 += neuralTestInput[i][0] + ")";
+            line2 += neuralAnswer[i] + ")";
+            file.WriteLine(line1);
+            file.WriteLine(line2);
+            file.WriteLine(@"title(main= ""Error"", col.main= ""black"", font.main= 4)");
+            file.Close();
+        }
+
+        public void CreateClassificationFile()
+        {
+
+            System.IO.StreamWriter file = new System.IO.StreamWriter("classificationChart.R");
+            string line1= "x < -c(";
+            string line2 = "y<- c(";
+            string line3 = "col<- c(";
+            int i;
+            for(i=0;i<neuralTestInput.Length-1;i++)
+            {
+                line1 += neuralTestInput[i][0] + ",";
+                line2 += neuralTestInput[i][1] + ",";
+                line3 += (int)neuralAnswer[i] + ",";
+            }
+            line1 += neuralTestInput[i][0] + ")";
+            line2 += neuralTestInput[i][1] + ")";
+            line3 += (int)neuralAnswer[i] + ")";
+            file.WriteLine(line1);
+            file.WriteLine(line2);
+            file.WriteLine(line3);
+            file.WriteLine(@"plot(x, y, pch= 21, bg= c(""red"", ""green3"", ""blue"")[col], main= ""Classification"")");
+            file.Close();         
         }
     }
 }
