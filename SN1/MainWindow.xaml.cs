@@ -327,3 +327,22 @@ namespace SN1
     }
 }
 
+
+
+//# error
+//points<- c(0.9, 0.8, 0.8, 0.8, 0.7, 0.6666, 0.655, 0.65544, 0.3, 0.02, 0.015, 0.002)
+//plot(points , type= "o", col= "red")
+//title(main= "Error", col.main= "black", font.main= 4)
+
+//# Klasyfikacja
+
+//x<- c(-1.3, -0.4, 0, 0.76, 0.12, 1.3)
+//y<- c( 0.3, 0.4, 1, 0.6, 0.12, 0.3)
+//col<- c( 1, 1, 2, 2, 3,3)
+//plot(x, y, pch= 21, bg= c("red", "green3", "blue")[col], main= "Classification")
+
+//# Regresja
+//x<- c(-1.3, -0.4, 0, 0.76, 0.12, 1.3)
+//y<- c( 0.3, 0.4, 1, 0.6, 0.12, 0.3)
+
+//plot(x, y, type= "p", col= "black", main= "Regression")
