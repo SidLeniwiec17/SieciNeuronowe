@@ -13,6 +13,8 @@ using SN1.Items;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
+
 namespace SN1
 {
     /// <summary>
@@ -23,13 +25,12 @@ namespace SN1
     /// </summary>
     public partial class MainWindow : Window
     {
-        public double[][] KLASYFIKACJA_INPUT;
-        public double[][] KLASYFIKACJA_IDEAL;
-
-        public double[][] KLASYFIKACJA_TESTOWY_INPUT;
-        public double[][] KLASYFIKACJA_ODPOWIEDZI;
-
-        public double[] KLASYFIKACJA_WYNIK;
+        IActivationFunction ActivationFunction { get; set; }
+        public double[][] neuralInput;
+        public double[][] neuralIdeal;
+        public double[][] neuralTestInput;
+        public double[][] neuralAnswers;
+        public double[] neuralAnswer;
        
         public NetworkHelper nHelp;
 
@@ -80,13 +81,13 @@ namespace SN1
                 return false;
             }
 
-            if (KLASYFIKACJA_INPUT.Length <= 0 || KLASYFIKACJA_IDEAL.Length <= 0)
+            if (neuralInput.Length <= 0 || neuralIdeal.Length <= 0)
             {
                 MessageBox.Show("Bład ! Nalezy wczytac zbior uczacy");
                 return false;
             }
 
-            if (KLASYFIKACJA_TESTOWY_INPUT.Length <= 0 )
+            if (neuralTestInput.Length <= 0 )
             {
                 MessageBox.Show("Bład ! Nalezy wczytac zbior testowy");
                 return false;
@@ -106,12 +107,12 @@ namespace SN1
         /*Funkcja która ustawia domyslne parametry przy uruchomieniu*/
         public void InitialSettings()
         {
-            KLASYFIKACJA_INPUT = new double[0][];
-            KLASYFIKACJA_IDEAL = new double[0][];
+            neuralInput = new double[0][];
+            neuralIdeal = new double[0][];
 
-            KLASYFIKACJA_TESTOWY_INPUT = new double[0][];
-            KLASYFIKACJA_ODPOWIEDZI = new double[0][];
-            KLASYFIKACJA_WYNIK = new double[0];
+            neuralTestInput = new double[0][];
+            neuralAnswers = new double[0][];
+            neuralAnswer = new double[0];
             
             CBAktywacje.SelectedIndex = 6;
             CBObciazenie.SelectedIndex = 0;
@@ -130,10 +131,10 @@ namespace SN1
             if (ValidateIntput() == false)
                 return;
 
-            INeuralDataSet learningSet = CombineTrainingSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
+            INeuralDataSet learningSet = CombineTrainingSet(neuralInput, neuralIdeal);
             //INeuralDataSet learningSet = NormaliseDataSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
         
-            INeuralDataSet trainingSet = CombineTrainingSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
+            INeuralDataSet trainingSet = CombineTrainingSet(neuralTestInput, neuralAnswers);
             //INeuralDataSet trainingSet = NormaliseDataSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
 
 
@@ -156,11 +157,11 @@ namespace SN1
             {
                 INeuralData output = learning.Network.Compute(pair.Input);
                 if ((int)(output[0]) == 1)
-                    KLASYFIKACJA_WYNIK[i] = 1.0;
+                    neuralAnswer[i] = 1.0;
                 else if ((int)(output[1]) == 1)
-                    KLASYFIKACJA_WYNIK[i] = 2.0;
+                    neuralAnswer[i] = 2.0;
                 else
-                    KLASYFIKACJA_WYNIK[i] = 3.0;
+                    neuralAnswer[i] = 3.0;
                 i++;
                 //Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
                 //+ ", actual=" + output[0] + ", " + output[1] + ", " + output[2] + ",ideal=" + pair.Ideal[0] + ", " + pair.Ideal[1] + ", " + pair.Ideal[2]);
@@ -217,19 +218,16 @@ namespace SN1
         public ITrain CreateNeuronNetwork(INeuralDataSet trainingSet)
         {
             BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), nHelp.bias, 2));
-
+            network.AddLayer(new BasicLayer(ActivationFunction, nHelp.bias, 2));
             for (int i = 0; i < nHelp.layers-2; i++ )
-                network.AddLayer(new BasicLayer(new ActivationSigmoid(), nHelp.bias, nHelp.neurons));
-
+                network.AddLayer(new BasicLayer(ActivationFunction, nHelp.bias, nHelp.neurons));
             if(nHelp.problem == 0)
-                network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 3));
+                network.AddLayer(new BasicLayer(ActivationFunction, false, 3));
             else
-                network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
+                network.AddLayer(new BasicLayer(ActivationFunction, false, 1));
 
             network.Structure.FinalizeStructure();
-            network.Reset();
-            
+            network.Reset();       
             ITrain train = new Backpropagation(network, trainingSet, nHelp.learning, nHelp.momentum);
             return train;
         }
@@ -238,17 +236,28 @@ namespace SN1
         {
             var fileReader = new FileReader();
             List<RowObject> items = fileReader.GetItems();
-            KLASYFIKACJA_INPUT = new double[items.Count][];
-            KLASYFIKACJA_IDEAL = new double[items.Count][];
+            neuralInput = new double[items.Count][];
+            neuralIdeal = new double[items.Count][];
             for (int i = 0; i < items.Count; i++)
             {
                 var item = (RowObject)items[i];
-                KLASYFIKACJA_INPUT[i] = new double[2];
-                KLASYFIKACJA_INPUT[i][0] = item.x;
-                KLASYFIKACJA_INPUT[i][1] = item.y.Value;
+                if(CBProblem.SelectedIndex == 0)
+                {
+                    neuralInput[i] = new double[2];
+                    neuralInput[i][0] = item.x;
+                    neuralInput[i][1] = item.y.Value;
 
-                KLASYFIKACJA_IDEAL[i] = new double[3] { 0.0, 0.0, 0.0 };
-                KLASYFIKACJA_IDEAL[i][item.cls.Value-1] = 1.0;
+                    neuralIdeal[i] = new double[3] { 0.0, 0.0, 0.0 };
+                    neuralIdeal[i][item.cls.Value - 1] = 1.0;
+                }
+                else
+                {
+                    neuralInput[i] = new double[1];
+                    neuralInput[i][0] = item.x;
+
+                    neuralIdeal[i] = new double[1] { 0.0};
+                    neuralIdeal[i][0] = item.y.Value;
+                }
             }
         }
 
@@ -256,20 +265,65 @@ namespace SN1
         {
             var fileReader = new FileReader();
             List<RowObject> items = fileReader.GetItems();
-            KLASYFIKACJA_TESTOWY_INPUT = new double[items.Count][];
-            KLASYFIKACJA_ODPOWIEDZI = new double[items.Count][];
-            KLASYFIKACJA_WYNIK = new double[items.Count];
+            neuralTestInput = new double[items.Count][];
+            neuralAnswers = new double[items.Count][];
+            neuralAnswer = new double[items.Count];
 
+            RowObject item = new RowObject();
             for (int i = 0; i < items.Count; i++)
             {
-                var item = (RowObject)items[i];
-                KLASYFIKACJA_TESTOWY_INPUT[i] = new double[2];
-                KLASYFIKACJA_TESTOWY_INPUT[i][0] = item.x;
-                KLASYFIKACJA_TESTOWY_INPUT[i][1] = item.y.Value;
-                KLASYFIKACJA_ODPOWIEDZI[i] = new double[3] { 0.0, 0.0, 0.0 };
+                item = (RowObject)items[i];
+                if (CBProblem.SelectedIndex == 0)
+                {
+                    neuralTestInput[i] = new double[2];
+                    neuralTestInput[i][0] = item.x;
+                    neuralTestInput[i][1] = item.y.Value;
+                    neuralAnswers[i] = new double[3] { 0.0, 0.0, 0.0 };
+                }
+                else
+                {
+                    neuralTestInput[i] = new double[1];
+                    neuralTestInput[i][0] = item.x;
+                    neuralAnswers[i] = new double[1] { 0.0 };
+                }
+            }
+            if ((CBProblem.SelectedIndex == 1 && item.cls.HasValue) || (CBProblem.SelectedIndex == 0 && !item.cls.HasValue))
+            {
+                MessageBox.Show("Input error");
+                this.Close();
             }
         }
 
+
+        private void CBAktywacje_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            ComboBoxItem typeItem = (ComboBoxItem)CBAktywacje.SelectedItem;
+            string value = typeItem.Content.ToString();
+            switch (value)
+            {
+                case "BiPolar":
+                    ActivationFunction = new ActivationBiPolar();
+                    break;
+                case "Linear":
+                    ActivationFunction = new ActivationLinear();
+                    break;
+                case "LOG":
+                    ActivationFunction = new ActivationLOG();
+                    break;
+                case "Sigmoid":
+                    ActivationFunction = new ActivationSigmoid();
+                    break;
+                case "SIN":
+                    ActivationFunction = new ActivationSIN();
+                    break;
+                case "SoftMax":
+                    ActivationFunction = new ActivationSoftMax();
+                    break;
+                case "TANH":
+                    ActivationFunction = new ActivationTANH();
+                    break;
+            }
+        }
     }
 }
 
