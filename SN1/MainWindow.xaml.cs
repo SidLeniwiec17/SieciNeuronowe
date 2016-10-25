@@ -12,6 +12,7 @@ using Encog.Normalize.Output;
 using SN1.Items;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -32,6 +33,7 @@ namespace SN1
         public double[][] neuralAnswers;
         public double[] neuralAnswer;
         public List<double> errors = new List<double>();
+        public int sety = 4;
        
         public NetworkHelper nHelp;
 
@@ -115,7 +117,7 @@ namespace SN1
             neuralAnswers = new double[0][];
             neuralAnswer = new double[0];
             
-            CBAktywacje.SelectedIndex = 6;
+            CBAktywacje.SelectedIndex = 3;
             CBObciazenie.SelectedIndex = 0;
             CBProblem.SelectedIndex = 0;
         }
@@ -129,14 +131,15 @@ namespace SN1
          */
         private void Start_Click(object sender, RoutedEventArgs e)
         {
+            errors = new List<double>();
             if (ValidateIntput() == false)
                 return;
 
-            INeuralDataSet learningSet = CombineTrainingSet(neuralInput, neuralIdeal);
-            //INeuralDataSet learningSet = NormaliseDataSet(KLASYFIKACJA_INPUT, KLASYFIKACJA_IDEAL);
+            //INeuralDataSet learningSet = CombineTrainingSet(neuralInput, neuralIdeal);
+            INeuralDataSet learningSet = NormaliseDataSet(neuralInput, neuralIdeal);
         
-            INeuralDataSet trainingSet = CombineTrainingSet(neuralTestInput, neuralAnswers);
-            //INeuralDataSet trainingSet = NormaliseDataSet(KLASYFIKACJA_TESTOWY_INPUT, KLASYFIKACJA_ODPOWIEDZI);
+           // INeuralDataSet trainingSet = CombineTrainingSet(neuralTestInput, neuralAnswers);
+            INeuralDataSet trainingSet = NormaliseDataSet(neuralTestInput, neuralAnswers);
 
 
             ITrain learning = CreateNeuronNetwork(learningSet);
@@ -158,12 +161,31 @@ namespace SN1
             foreach (INeuralDataPair pair in trainingSet)
             {
                 INeuralData output = learning.Network.Compute(pair.Input);
-                if ((int)(output[0]) == 1)
-                    neuralAnswer[i] = 1.0;
-                else if ((int)(output[1]) == 1)
-                    neuralAnswer[i] = 2.0;
+                if (CBProblem.SelectedIndex == 0)
+                {
+                    if (sety == 4)
+                    {
+                        if ((int)(output[0]) == 1)
+                            neuralAnswer[i] = 1.0;
+                        else if ((int)(output[1]) == 1)
+                            neuralAnswer[i] = 2.0;
+                        else if ((int)(output[2]) == 1)
+                            neuralAnswer[i] = 3.0;
+                        else
+                            neuralAnswer[i] = 4.0;
+                    }
+                    else if (sety == 3)
+                    {
+                        if ((int)(output[0]) == 1)
+                            neuralAnswer[i] = 1.0;
+                        else if ((int)(output[1]) == 1)
+                            neuralAnswer[i] = 2.0;
+                        else
+                            neuralAnswer[i] = 3.0;
+                    }
+                }
                 else
-                    neuralAnswer[i] = 3.0;
+                    neuralAnswer[i] = output[0];
                 i++;
                 //Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
                 //+ ", actual=" + output[0] + ", " + output[1] + ", " + output[2] + ",ideal=" + pair.Ideal[0] + ", " + pair.Ideal[1] + ", " + pair.Ideal[2]);
@@ -229,11 +251,16 @@ namespace SN1
         public ITrain CreateNeuronNetwork(INeuralDataSet trainingSet)
         {
             BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(ActivationFunction, nHelp.bias, 2));
+            if (nHelp.problem == 0)
+                network.AddLayer(new BasicLayer(ActivationFunction, nHelp.bias, 2));
+            else
+                network.AddLayer(new BasicLayer(ActivationFunction, nHelp.bias, 1));
+
             for (int i = 0; i < nHelp.layers-2; i++ )
                 network.AddLayer(new BasicLayer(ActivationFunction, nHelp.bias, nHelp.neurons));
+
             if(nHelp.problem == 0)
-                network.AddLayer(new BasicLayer(ActivationFunction, false, 3));
+                network.AddLayer(new BasicLayer(ActivationFunction, false, 4));
             else
                 network.AddLayer(new BasicLayer(ActivationFunction, false, 1));
 
@@ -259,7 +286,11 @@ namespace SN1
                     neuralInput[i][0] = item.x;
                     neuralInput[i][1] = item.y.Value;
 
-                    neuralIdeal[i] = new double[3] { 0.0, 0.0, 0.0 };
+                    if(sety == 4)
+                    neuralIdeal[i] = new double[4] { 0.0, 0.0, 0.0, 0.0 };
+                    else if (sety == 3)
+                    neuralIdeal[i] = new double[3] {0.0, 0.0, 0.0 };
+                    
                     neuralIdeal[i][item.cls.Value - 1] = 1.0;
                 }
                 else
@@ -296,7 +327,12 @@ namespace SN1
                     neuralTestInput[i] = new double[2];
                     neuralTestInput[i][0] = item.x;
                     neuralTestInput[i][1] = item.y.Value;
-                    neuralAnswers[i] = new double[3] { 0.0, 0.0, 0.0 };
+
+                    if (sety == 4)
+                        neuralAnswers[i] = new double[4] { 0.0, 0.0, 0.0, 0.0 };
+                    else if (sety == 3)
+                        neuralAnswers[i] = new double[3] { 0.0, 0.0, 0.0 };
+                    
                 }
                 else
                 {
@@ -347,13 +383,17 @@ namespace SN1
             string line = "";
             // Write the string to a file.
             System.IO.StreamWriter file = new System.IO.StreamWriter("errors.R");
+
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
+
             line = "points<- c(";
             int i = 0;
             for (i=0;i<errors.Count-1;i++)
             {
-                line += errors[i] + ",";
+                line += errors[i].ToString(nfi) + ",";
             }
-            line += errors[i] + ")";
+            line += errors[i].ToString(nfi) + ")";
             file.WriteLine(line);
             file.WriteLine(@"plot(points , type= ""o"", col= ""red"")");
             file.WriteLine(@"title(main= ""Error"", col.main= ""black"", font.main= 4)");
@@ -365,19 +405,21 @@ namespace SN1
         }
         public void CreateRegressionFile()
         {
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
             System.IO.StreamWriter file = new System.IO.StreamWriter("regressionChart.R");
             string line1;
             string line2;
-            line1 = "x<- c(";
-            line2 = "y<- c(";
+            line1 = "x <- c(";
+            line2 = "y <- c(";
             int i;
             for (i=0;i<neuralTestInput.Length-1;i++)
             {
-                line1 += neuralTestInput[i][0] + ",";
-                line2 += neuralAnswer[i] + ",";
+                line1 += neuralTestInput[i][0].ToString(nfi) + ",";
+                line2 += neuralAnswer[i].ToString(nfi) + ",";
             }
-            line1 += neuralTestInput[i][0] + ")";
-            line2 += neuralAnswer[i] + ")";
+            line1 += neuralTestInput[i][0].ToString(nfi) + ")";
+            line2 += neuralAnswer[i].ToString(nfi) + ")";
             file.WriteLine(line1);
             file.WriteLine(line2);
             file.WriteLine(@"title(main= ""Error"", col.main= ""black"", font.main= 4)");
@@ -386,25 +428,26 @@ namespace SN1
 
         public void CreateClassificationFile()
         {
-
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
             System.IO.StreamWriter file = new System.IO.StreamWriter("classificationChart.R");
-            string line1= "x < -c(";
-            string line2 = "y<- c(";
-            string line3 = "col<- c(";
+            string line1= "x <- c(";
+            string line2 = "y <- c(";
+            string line3 = "col <- c(";
             int i;
             for(i=0;i<neuralTestInput.Length-1;i++)
             {
-                line1 += neuralTestInput[i][0] + ",";
-                line2 += neuralTestInput[i][1] + ",";
+                line1 += neuralTestInput[i][0].ToString(nfi) + ",";
+                line2 += neuralTestInput[i][1].ToString(nfi) + ",";
                 line3 += (int)neuralAnswer[i] + ",";
             }
-            line1 += neuralTestInput[i][0] + ")";
-            line2 += neuralTestInput[i][1] + ")";
+            line1 += neuralTestInput[i][0].ToString(nfi) + ")";
+            line2 += neuralTestInput[i][1].ToString(nfi) + ")";
             line3 += (int)neuralAnswer[i] + ")";
             file.WriteLine(line1);
             file.WriteLine(line2);
             file.WriteLine(line3);
-            file.WriteLine(@"plot(x, y, pch= 21, bg= c(""red"", ""green3"", ""blue"")[col], main= ""Classification"")");
+            file.WriteLine(@"plot(x, y, pch= 21, bg= c(""red"", ""green3"", ""blue"", ""yellow"")[col], main= ""Classification"")");
             file.Close();         
         }
     }
@@ -412,20 +455,3 @@ namespace SN1
 
 
 
-//# error
-//points<- c(0.9, 0.8, 0.8, 0.8, 0.7, 0.6666, 0.655, 0.65544, 0.3, 0.02, 0.015, 0.002)
-//plot(points , type= "o", col= "red")
-//title(main= "Error", col.main= "black", font.main= 4)
-
-//# Klasyfikacja
-
-//x<- c(-1.3, -0.4, 0, 0.76, 0.12, 1.3)
-//y<- c( 0.3, 0.4, 1, 0.6, 0.12, 0.3)
-//col<- c( 1, 1, 2, 2, 3,3)
-//plot(x, y, pch= 21, bg= c("red", "green3", "blue")[col], main= "Classification")
-
-//# Regresja
-//x<- c(-1.3, -0.4, 0, 0.76, 0.12, 1.3)
-//y<- c( 0.3, 0.4, 1, 0.6, 0.12, 0.3)
-
-//plot(x, y, type= "p", col= "black", main= "Regression")
