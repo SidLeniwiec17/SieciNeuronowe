@@ -6,9 +6,6 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.NeuralData;
-using Encog.Normalize;
-using Encog.Normalize.Input;
-using Encog.Normalize.Output;
 using SN1.Items;
 using System;
 using System.Collections.Generic;
@@ -146,11 +143,22 @@ namespace SN1
             //NormaliseDataSetReg
 
             ITrain learning = CreateNeuronNetwork(learningSet);
-            int iteracja = 0; 
-            
-            do
+            int iteracja = 0;
+            INeuralData data = null;
+            INeuralDataPair dataPair = null;
+            foreach (INeuralDataPair pair in learningSet)
+            {
+                dataPair = pair;
+                data = pair.Input;
+                break;
+            }
+            INeuralData tmp = null;
+                do
             {
                 learning.Iteration();
+                Console.WriteLine("OUTPUT IDEALNY: " + dataPair.Ideal);
+                tmp = learning.Network.Compute(data);
+                Console.WriteLine("WARTOŚĆ OFICJALNA:"+ tmp.Data[0]);
                 Console.WriteLine("Epoch #" + iteracja + " Error:" + learning.Error);
                 errors.Add(learning.Error);
                 iteracja++;
