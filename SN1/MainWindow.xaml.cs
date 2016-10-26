@@ -135,12 +135,15 @@ namespace SN1
             if (ValidateIntput() == false)
                 return;
 
-            //INeuralDataSet learningSet = CombineTrainingSet(neuralInput, neuralIdeal);
-            INeuralDataSet learningSet = NormaliseDataSet(neuralInput, neuralIdeal);
-        
-           // INeuralDataSet trainingSet = CombineTrainingSet(neuralTestInput, neuralAnswers);
-            INeuralDataSet trainingSet = NormaliseDataSet(neuralTestInput, neuralAnswers);
+            INeuralDataSet learningSet, trainingSet;
 
+            learningSet = CombineTrainingSet(neuralInput, neuralIdeal);
+            //learningSet = NormaliseDataSet(neuralInput, neuralIdeal);
+
+            trainingSet = CombineTrainingSet(neuralTestInput, neuralAnswers);
+            //trainingSet = NormaliseDataSet(neuralTestInput, neuralAnswers);
+       
+            //NormaliseDataSetReg
 
             ITrain learning = CreateNeuronNetwork(learningSet);
             int iteracja = 0; 
@@ -165,20 +168,20 @@ namespace SN1
                 {
                     if (sety == 4)
                     {
-                        if ((int)(output[0]) == 1)
+                        if ((double)(output[0]) >= 0.6)
                             neuralAnswer[i] = 1.0;
-                        else if ((int)(output[1]) == 1)
+                        else if ((double)(output[1]) >=0.6)
                             neuralAnswer[i] = 2.0;
-                        else if ((int)(output[2]) == 1)
+                        else if ((double)(output[2]) >= 0.6)
                             neuralAnswer[i] = 3.0;
                         else
                             neuralAnswer[i] = 4.0;
                     }
                     else if (sety == 3)
                     {
-                        if ((int)(output[0]) == 1)
+                        if ((double)(output[0]) >= 0.6)
                             neuralAnswer[i] = 1.0;
-                        else if ((int)(output[1]) == 1)
+                        else if ((double)(output[1]) >= 0.6)
                             neuralAnswer[i] = 2.0;
                         else
                             neuralAnswer[i] = 3.0;
@@ -206,36 +209,37 @@ namespace SN1
 
         public INeuralDataSet NormaliseDataSet ( double[][] input, double[][] ideal)
         {
-            double [][] norm_input = new double[input.Length][];
-
+            double[][] norm_input = new double[input.Length][];
+              
             double max = input[0][0], min = input[0][0];
 
-            for(int i = 0 ; i < input.Length ; i ++)
-            {
-                if (input[i][0] < min)
-                    min = input[i][0];
-                if (input[i][1] < min)
-                    min = input[i][1];
+                for (int i = 0; i < input.Length; i++)
+                {
+                    if (input[i][0] < min)
+                        min = input[i][0];
+                    if (input[i][1] < min)
+                        min = input[i][1];
 
-                if (input[i][0] > max)
-                    max = input[i][0];
-                if (input[i][1] > max)
-                    max = input[i][1];
-            }
+                    if (input[i][0] > max)
+                        max = input[i][0];
+                    if (input[i][1] > max)
+                        max = input[i][1];
+                }
 
 
-            for (int i = 0; i < input.Length; i++)
-            {
-                norm_input[i] = new double[2];
-                norm_input[i][0] = (input[i][0] - min) / (max - min);
-                norm_input[i][1] = (input[i][1] - min) / (max - min);
-            }
-
+                for (int i = 0; i < input.Length; i++)
+                {
+                    norm_input[i] = new double[2];
+                    norm_input[i][0] = (input[i][0] - min) / (max - min);
+                    norm_input[i][1] = (input[i][1] - min) / (max - min);
+                }
+         
             INeuralDataSet dataset = CombineTrainingSet(norm_input, ideal);
             return dataset;
         }
 
 
+   
         /*Funckja laczy dane wejsciowe zbioru uczacego z oczekiwanymi odpowiedziami w jeden obiekt bilbiotego Encog*/
         public INeuralDataSet CombineTrainingSet(double[][] dane, double[][] odpowiedzi)
         {
@@ -422,7 +426,7 @@ namespace SN1
             line2 += neuralAnswer[i].ToString(nfi) + ")";
             file.WriteLine(line1);
             file.WriteLine(line2);
-            file.WriteLine(@"title(main= ""Error"", col.main= ""black"", font.main= 4)");
+            file.WriteLine(@"plot(x, y, type=""p"", col=""black"" ,main=""Regression"")");
             file.Close();
         }
 

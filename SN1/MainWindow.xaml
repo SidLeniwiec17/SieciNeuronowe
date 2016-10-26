@@ -38,8 +38,8 @@
         </ComboBox>
         <Button Grid.Column="1" Grid.Row="1" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="WczytajUczacy_Click"/>
         <Button Grid.Column="1" Grid.Row="2" Content="Załaduj" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="WczytajTestowy_Click"/>
-        <TextBox Name="TBLayers" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="6" VerticalAlignment="Center"/>
-        <TextBox Name="TBNeuronsInLayer" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="4" VerticalAlignment="Center"/>
+        <TextBox Name="TBLayers" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="4" VerticalAlignment="Center"/>
+        <TextBox Name="TBNeuronsInLayer" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="40" VerticalAlignment="Center"/>
         <ComboBox Name ="CBAktywacje" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" SelectionChanged="CBAktywacje_SelectionChanged">
             <ComboBoxItem Name="cbi1" >BiPolar</ComboBoxItem>
             <ComboBoxItem Name="cbi4">Linear</ComboBoxItem>
@@ -54,7 +54,7 @@
             <ComboBoxItem Name="cbi13">Wyłączone</ComboBoxItem>
         </ComboBox>
         <TextBox Name="TBIteracje" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="1000" VerticalAlignment="Center"/>
-        <TextBox Name="TBWspUczenia" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,4" VerticalAlignment="Center"  Grid.Row="8"/>
+        <TextBox Name="TBWspUczenia" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,002" VerticalAlignment="Center"  Grid.Row="8"/>
         <TextBox Name="TBWspBezwladnosci" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,3" VerticalAlignment="Center"/>
         
         <Button Grid.Column="1" Grid.Row="10" Content="Start" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="Start_Click"/>
