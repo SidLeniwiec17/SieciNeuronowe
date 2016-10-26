@@ -147,6 +147,7 @@ namespace SN1
 
             ITrain learning = CreateNeuronNetwork(learningSet);
             int iteracja = 0; 
+            
             do
             {
                 learning.Iteration();
@@ -210,6 +211,7 @@ namespace SN1
         public INeuralDataSet NormaliseDataSet ( double[][] input, double[][] ideal)
         {
             double[][] norm_input = new double[input.Length][];
+            double[][] norm_ideal = new double[input.Length][];
               
             double max = input[0][0], min = input[0][0];
 
@@ -217,24 +219,45 @@ namespace SN1
                 {
                     if (input[i][0] < min)
                         min = input[i][0];
-                    if (input[i][1] < min)
+
+                    if (CBProblem.SelectedIndex == 0)
+                    if (input[i][1] < min )
                         min = input[i][1];
 
                     if (input[i][0] > max)
                         max = input[i][0];
-                    if (input[i][1] > max)
+                    if (CBProblem.SelectedIndex == 0)
+                    if (input[i][1] > max )
                         max = input[i][1];
                 }
 
 
-                for (int i = 0; i < input.Length; i++)
+
+                if (CBProblem.SelectedIndex == 0)
                 {
-                    norm_input[i] = new double[2];
-                    norm_input[i][0] = (input[i][0] - min) / (max - min);
-                    norm_input[i][1] = (input[i][1] - min) / (max - min);
+                    for (int i = 0; i < input.Length; i++)
+                    {
+                        norm_input[i] = new double[2];
+                        norm_input[i][0] = (input[i][0] - min) / (max - min);
+                        norm_input[i][1] = (input[i][1] - min) / (max - min);
+                    }
                 }
-         
-            INeuralDataSet dataset = CombineTrainingSet(norm_input, ideal);
+                else
+                {
+                    for (int i = 0; i < input.Length; i++)
+                    {
+                        norm_input[i] = new double[1];
+                        norm_ideal[i] = new double[1];
+                        norm_input[i][0] = (input[i][0] - min) / (max - min);
+                        norm_ideal[i][0] = (ideal[i][0] - min) / (max - min);
+                    }
+                }
+               
+            INeuralDataSet dataset;
+            if (CBProblem.SelectedIndex == 0)
+            dataset = CombineTrainingSet(norm_input, ideal);
+            else
+            dataset = CombineTrainingSet(norm_input, ideal);
             return dataset;
         }
 
