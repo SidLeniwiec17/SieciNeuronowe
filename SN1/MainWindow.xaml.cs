@@ -17,9 +17,6 @@ namespace SN1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// TODO : wgrywanie plikow
-    /// TODO : Narazie zamiast 4 tablic wgrywanych z excela ( po dwie na zbiory learningowe i testowe
-    /// TODO : Sa dwie mini tablice z palca do zbioru learningowego 
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -120,11 +117,8 @@ namespace SN1
         }
 
         /*Zdazenie obslugujace klikniecie guzika Start. Funkcje sprawdza czy parametry sa poprawne. Jezeli tak 
-         to kontunuuje.
-         Nastepnie przygotowuje zbiór traninowy
-         Nastepnie tworzymy sieć
-         Na samym koncu uruchamiane sa obliczenia
-         
+         to kontunuuje. Nastepnie przygotowuje zbiór traninowy
+         Nastepnie tworzymy sieć. Na samym koncu uruchamiane sa obliczenia
          */
         private void Start_Click(object sender, RoutedEventArgs e)
         {
@@ -135,13 +129,9 @@ namespace SN1
             INeuralDataSet learningSet, trainingSet;
 
             learningSet = CombineTrainingSet(neuralInput, neuralIdeal);
-            //learningSet = NormaliseDataSet(neuralInput, neuralIdeal);
-
+            
             trainingSet = CombineTrainingSet(neuralTestInput, neuralAnswers);
-            //trainingSet = NormaliseDataSet(neuralTestInput, neuralAnswers);
        
-            //NormaliseDataSetReg
-
             ITrain learning = CreateNeuronNetwork(learningSet);
             int iteracja = 0;
             INeuralData data = null;
@@ -199,8 +189,6 @@ namespace SN1
                 else
                     neuralAnswer[i] = output[0];
                 i++;
-                //Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
-                //+ ", actual=" + output[0] + ", " + output[1] + ", " + output[2] + ",ideal=" + pair.Ideal[0] + ", " + pair.Ideal[1] + ", " + pair.Ideal[2]);
             }
 
             Console.WriteLine("Calculated");
@@ -215,61 +203,6 @@ namespace SN1
             }
 
         }
-
-        public INeuralDataSet NormaliseDataSet ( double[][] input, double[][] ideal)
-        {
-            double[][] norm_input = new double[input.Length][];
-            double[][] norm_ideal = new double[input.Length][];
-              
-            double max = input[0][0], min = input[0][0];
-
-                for (int i = 0; i < input.Length; i++)
-                {
-                    if (input[i][0] < min)
-                        min = input[i][0];
-
-                    if (CBProblem.SelectedIndex == 0)
-                    if (input[i][1] < min )
-                        min = input[i][1];
-
-                    if (input[i][0] > max)
-                        max = input[i][0];
-                    if (CBProblem.SelectedIndex == 0)
-                    if (input[i][1] > max )
-                        max = input[i][1];
-                }
-
-
-
-                if (CBProblem.SelectedIndex == 0)
-                {
-                    for (int i = 0; i < input.Length; i++)
-                    {
-                        norm_input[i] = new double[2];
-                        norm_input[i][0] = (input[i][0] - min) / (max - min);
-                        norm_input[i][1] = (input[i][1] - min) / (max - min);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < input.Length; i++)
-                    {
-                        norm_input[i] = new double[1];
-                        norm_ideal[i] = new double[1];
-                        norm_input[i][0] = (input[i][0] - min) / (max - min);
-                        norm_ideal[i][0] = (ideal[i][0] - min) / (max - min);
-                    }
-                }
-               
-            INeuralDataSet dataset;
-            if (CBProblem.SelectedIndex == 0)
-            dataset = CombineTrainingSet(norm_input, ideal);
-            else
-            dataset = CombineTrainingSet(norm_input, ideal);
-            return dataset;
-        }
-
-
    
         /*Funckja laczy dane wejsciowe zbioru uczacego z oczekiwanymi odpowiedziami w jeden obiekt bilbiotego Encog*/
         public INeuralDataSet CombineTrainingSet(double[][] dane, double[][] odpowiedzi)
@@ -278,10 +211,6 @@ namespace SN1
         }
 
         /*Funkcja z parametrow tworzy odpowiednia siec neuronowa
-         
-         * TODO : Czy na koncu musi byc jeden neuron czy 3 ?
-         * TODO : Jak zrobic zeby zamiast 'new ActivationSigmoid' byla jedna z wielu funkcji 
-         * z comboBoxa CBAktywacje ?
          */
         public ITrain CreateNeuronNetwork(INeuralDataSet trainingSet)
         {
@@ -376,11 +305,6 @@ namespace SN1
                     neuralAnswers[i] = new double[1] { 0.0 };
                 }
             }
-            /*if ((CBProblem.SelectedIndex == 1 && item.cls.HasValue) || (CBProblem.SelectedIndex == 0 && !item.cls.HasValue))
-            {
-                MessageBox.Show("Input error");
-                this.Close();
-            }*/
         }
 
 
@@ -432,10 +356,7 @@ namespace SN1
             file.WriteLine(line);
             file.WriteLine(@"plot(points , type= ""o"", col= ""red"")");
             file.WriteLine(@"title(main= ""Error"", col.main= ""black"", font.main= 4)");
-            //points<- c(0.9, 0.8, 0.8, 0.8, 0.7, 0.6666, 0.655, 0.65544, 0.3, 0.02, 0.015, 0.002)
-            //plot(points , type= "o", col= "red")
-            //title(main= "Error", col.main= "black", font.main= 4)
-
+            
             file.Close();
         }
         public void CreateRegressionFile()

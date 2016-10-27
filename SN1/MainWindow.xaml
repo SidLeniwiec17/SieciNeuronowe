@@ -19,7 +19,6 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="Rodzaj problemu" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
         <Label Grid.Column="0" Grid.Row="1" Content="Załaduj zbiór uczący" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
@@ -58,6 +57,5 @@
         <TextBox Name="TBWspBezwladnosci" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Center" Margin="2,2,2,2" TextWrapping="Wrap" Text="0,3" VerticalAlignment="Center"/>
         
         <Button Grid.Column="1" Grid.Row="10" Content="Start" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center" Click="Start_Click"/>
-        <Button Grid.Column="1" Grid.Row="12" Content="Rysuj Wyniki" HorizontalAlignment="Center" Margin="2,2,2,2" VerticalAlignment="Center"/>
     </Grid>
 </Window>
